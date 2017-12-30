@@ -29,16 +29,16 @@ class CategoryForm extends React.Component{
     if(newProps.category)
       this.setState(newProps.category);
   };
-  
+
   render(){
     let button = this.props.category ? 'update category' : 'create category';
-    
+
 
     return(
       <div className='category-form'>
         <form
           onSubmit={this.handleSubmit}>
-  
+
           <input
             className='type-input'
             type='text'
@@ -55,9 +55,9 @@ class CategoryForm extends React.Component{
             value={this.state.budget}
             onChange={this.handleChange}
           />
-  
+
           <button type='submit'> {button} </button>
-        
+
         </form>
       </div>
     )
