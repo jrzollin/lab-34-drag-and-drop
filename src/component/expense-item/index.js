@@ -6,8 +6,6 @@ class ExpenseItem extends React.Component{
     super(props);
 
     this.handleDragStart = this.handleDragStart.bind(this);
-    this.handleDragOver = this.handleDragOver.bind(this);
-    this.handleDrop = this.handleDrop.bind(this);
   }
 
   handleDragStart(e){
@@ -16,22 +14,13 @@ class ExpenseItem extends React.Component{
       return exp.id === e.target.id;
     })[0];
 
-    console.log(card);
+    e.dataTransfer.setData('text/json', JSON.stringify(card));
   }
 
-  handleDragOver(e){
-    e.preventDefault();
-    console.log('over');
-  }
-
-  handleDrop(e){
-    e.preventDefault();
-    console.log('dropped');
-  }
 
   render(){
     return(
-      <div className='expense-item' onDragOver={this.handleDragOver} onDrop={this.handleDrop}>
+      <div className='expense-item'>
         {this.props.expenses[this.props.categoryID].map((expense,i) =>
           <div key={expense.id} id={expense.id} draggable="true" onDragStart={this.handleDragStart}>
             <p> {(expense.name)} </p>
