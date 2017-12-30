@@ -18,6 +18,8 @@ class ExpenseForm extends React.Component{
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDragOver = this.handleDragOver.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
   }
 
   handleChange(e){
@@ -31,10 +33,23 @@ class ExpenseForm extends React.Component{
     this.setState(emptyState);
   }
 
+  handleDragOver(e){
+    e.preventDefault();
+  }
+
+  handleDrop(e){
+    e.preventDefault();
+    let payload = e.dataTransfer.getData('text/json');
+    let card = JSON.parse(payload);
+    this.props.expenseDelete(card);
+    card.categoryID = this.state.categoryID;
+    this.props.onComplete(card);
+  }
+
   render(){
     return(
-      <div className='category-form'>
-        <form 
+      <div className='category-form' onDragOver={this.handleDragOver} onDrop={this.handleDrop}>
+        <form
           className='expense-form'
           onSubmit={this.handleSubmit}
         >
@@ -54,10 +69,10 @@ class ExpenseForm extends React.Component{
           <button type='submit'> create expense </button>
         </form>
 
-        <ExpenseItem 
+        <ExpenseItem
           expenseDelete={this.props.expenseDelete}
-          expenses={this.props.expenses} 
-          categoryID={this.state.categoryID}/> 
+          expenses={this.props.expenses}
+          categoryID={this.state.categoryID}/>
 
       </div>
     )
